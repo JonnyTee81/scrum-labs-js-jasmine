@@ -11,10 +11,10 @@ Game.prototype = {
     randomWithinLimitOf: function (n) {
         return Math.floor(this.generator() * n);
     },
-    fireWeapon: function(ui, weaponType, target){
+    fireWeapon: function(ui, weaponType, target, amount){
         switch(weaponType){
             case "phaser":
-                this.firePhaser(ui, target);
+                this.firePhaser(ui, target, amount);
                 break;
             case "photon":
                 this.firePhoton(ui, target);
@@ -24,15 +24,15 @@ Game.prototype = {
                 break;
         }
     },
-    firePhaser: function(ui, target){
-        var amount = parseInt(ui.parameter("amount"), 10);
+    firePhaser: function(ui, target, amount){
+        var weaponAmount = parseInt(amount, 10);
         var enemy = target;
-        if (this.e >= amount) {
+        if (this.e >= weaponAmount) {
             distance = enemy.distance;
             if (distance > this.maxPhaserRange) {
                 ui.writeLine("Klingon out of range of phasers at " + distance + " sectors...");
             } else {
-                damage = amount - (((amount / 20) * distance / 200) + this.randomWithinLimitOf(200));
+                damage = weaponAmount - (((weaponAmount / 20) * distance / 200) + this.randomWithinLimitOf(200));
                 if (damage < 1) {
                     damage = 1;
                 }
@@ -77,6 +77,7 @@ Game.prototype = {
     processCommand: function (ui) {
         var target = ui.variable("target");
         var command = ui.parameter("command");
-        this.fireWeapon(ui, command, target);
+        var amount = ui.parameter("amount");
+        this.fireWeapon(ui, command, target, amount);
     }
 };
