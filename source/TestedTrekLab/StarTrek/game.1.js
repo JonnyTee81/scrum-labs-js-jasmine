@@ -1,6 +1,6 @@
 Game = function () {
-    this.e = 10000;
-    this.t = 8;
+    this.energy = 10000;
+    this.torpedos = 8;
     this.maxPhaserRange = 4000;
 };
 
@@ -27,7 +27,8 @@ Game.prototype = {
     firePhaser: function(ui, target, amount){
         var weaponAmount = parseInt(amount, 10);
         var enemy = target;
-        if (this.e >= weaponAmount) {
+        var weaponName = "phasers";
+        if (this.energy >= weaponAmount) {
             distance = enemy.distance;
             if (distance > this.maxPhaserRange) {
                 ui.writeLine("Klingon out of range of phasers at " + distance + " sectors...");
@@ -37,35 +38,26 @@ Game.prototype = {
                     damage = 1;
                 }
                 ui.writeLine("Phasers hit Klingon at " + distance + " sectors with " + damage + " units");
-                if (damage < enemy.energy) {
-                    enemy.energy = enemy.energy - damage;
-                    ui.writeLine("Klingon has " + enemy.energy + " remaining");
-                } else {
-                    this.destroyKlingon(ui, enemy);
-                }
+                this.hitEnemy(ui, enemy, damage);
             }
-            this.e -= amount;
+            this.energy -= amount;
         } else {
             ui.writeLine("Insufficient energy to fire phasers!");
         }
     },
     firePhoton: function (ui, target) {
         var enemy = target;
-        if (this.t > 0) {
+        var weaponName = "photons";
+        if (this.torpedos > 0) {
             distance = enemy.distance;
             if ((this.randomWithinLimitOf(4) + ((distance / 500) + 1) > 7)) {
                 ui.writeLine("Torpedo missed Klingon at " + distance + " sectors...");
             } else {
                 damage = 800 + this.randomWithinLimitOf(50);
                 ui.writeLine("Photons hit Klingon at " + distance + " sectors with " + damage + " units");
-                if (damage < enemy.energy) {
-                    enemy.energy = enemy.energy - damage;
-                    ui.writeLine("Klingon has " + enemy.energy + " remaining");
-                } else {
-                    this.destroyKlingon(ui, enemy); 
-                }
+                this.hitEnemy(ui, enemy, damage);
             }
-            this.t--;
+            this.torpedos--;
         } else {
             ui.writeLine("No more photon torpedoes!");
         }
@@ -73,6 +65,14 @@ Game.prototype = {
     destroyKlingon: function(ui, enemy){
         ui.writeLine("Klingon destroyed!");
         enemy.destroy();
+    },
+    hitEnemy: function(ui, enemy, damage, weaponName){
+        if (damage < enemy.energy) {
+            enemy.energy = enemy.energy - damage;
+            ui.writeLine("Klingon has " + enemy.energy + " remaining");
+        } else {
+            this.destroyKlingon(ui, enemy);
+        }
     },
     processCommand: function (ui) {
         var target = ui.variable("target");
