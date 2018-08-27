@@ -12,7 +12,7 @@ describe("photons", function() {
 
     it ("reports when no torpedoes remain", function() {
         // given
-        game.torpedos = 0;
+        game.torpedoes = 0;
         ui.target = new Klingon();
 
         // when
@@ -35,7 +35,7 @@ describe("photons", function() {
         });
 
         it("reduces torpedoes available", function() {
-            expect(game.torpedos).toBe(7);
+            expect(game.torpedoes).toBe(7);
         });
     });
 
@@ -52,7 +52,7 @@ describe("photons", function() {
         });
 
         it("reduces torpedoes available", function() {
-            expect(game.torpedos).toBe(7);
+            expect(game.torpedoes).toBe(7);
         });
     });
 
@@ -72,7 +72,7 @@ describe("photons", function() {
         });
 
         it("subtracts a torpedo", function() {
-            expect(game.torpedos).toBe(7);
+            expect(game.torpedoes).toBe(7);
         });
 
         it("actually destroys Klingon", function() {
@@ -93,7 +93,7 @@ describe("photons", function() {
         });
 
         it("subtracts a torpedo", function() {
-            expect(game.torpedos).toBe(7);
+            expect(game.torpedoes).toBe(7);
         });
     });
 });
