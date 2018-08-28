@@ -88,6 +88,8 @@ describe("shields", function () {
         });
     });
     describe("shieldsbuckle", function() {
+        // it("should decrement shield energy when shield")
+
         it("should buckle when shield energy level drops below 0 energy units", function() {
             // given
 

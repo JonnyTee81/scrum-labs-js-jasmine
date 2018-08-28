@@ -5,16 +5,16 @@ Game = function() {
     // this.subSystems = ['weapons', 'engines', 'shields'];
     this.subSystems = [{
             system: 'weapons',
-            unitToStardate: 300,
-            units: 0
+            unitToStardate: -300,
+            damaged: false
         },{
             system: 'shields',
-            unitToStardate: 500,
-            units: 0
+            unitToStardate: -500,
+            damaged: false
         }, {
             system: 'engines',
-            unitToStardate: 200,
-            units: 0
+            unitToStardate: -200,
+            damaged: false
         }];
     this.selectedSubSystem = null;
 
@@ -107,9 +107,17 @@ Game.prototype = {
             this.shield.raise();
         }
     },
-    dispurseEnergytoSubsystem: function(val){
+    selectRandomSubsystem: function(val){
+        
         this.selectedSubSystem = this.getRandomItemFromArray(this.subSystems);
         console.log(this.selectedSubSystem);
+    },
+    damageSubsystem: function (val){
+        if(!this.selectedSubSystem.damaged){
+            if(this.selectedSubSystem.unitToStardate >= val){
+                this.selectedSubSystem.damaged = true;
+            }
+        }
     },
     getRandomItemFromArray: function (itemArray) {
         return itemArray[Math.floor(Math.random() * itemArray.length)]
