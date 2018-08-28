@@ -2,6 +2,8 @@ Game = function() {
     this.energy = 10000;
     this.torpedoes = 8;
     this.maxPhaserRange = 4000;
+
+    this.shield = new Shield();
 };
 
 Game.prototype = {
@@ -85,10 +87,23 @@ Game.prototype = {
             ui.writeLine("No more photon torpedoes!");
         }       
     },
+    toggleShield: function (direction) {
+        if (direction === "up") {
+            this.shield.raise();
+        }
+    },
     processCommand: function(ui) {
         var target = ui.variable("target");
         var command = ui.parameter("command");
         var amount = ui.parameter("amount");
+        if (command.match("shield")) {
+            if (amount === "up") {
+                this.toggleShield(amount);
+            }
+            if (amount === "transfer") {
+                this.shield.changeEnergy(target);
+            }
+        }
         this.fireWeapon(ui, command, target, amount);
     }
 };
