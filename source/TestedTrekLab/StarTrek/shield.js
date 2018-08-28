@@ -1,6 +1,7 @@
 Shield = function () {
     this.isUp = false;
     this.energyLevel = 8000;
+    this.shieldsbuckle=false;
 }
 
 Shield.prototype = {
@@ -12,10 +13,11 @@ Shield.prototype = {
         }
         if (this.energyLevel < 0) {
             this.energyLevel = 0;
-            // TODO - was this from damage or transfer?
+            this.shieldsbuckle = true;
         }
+
     },
     raise: function () {
         this.isUp = true;
     }
-};  
+};

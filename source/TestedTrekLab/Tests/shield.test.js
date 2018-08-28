@@ -37,17 +37,17 @@ describe("shields", function () {
     describe("changeEnergy", function() {
         it("should have a maximum of 10000 energy units", function() {
             // given
-    
+
             // when
             shield.changeEnergy(2000);
-    
+
             // then
             expect(shield.energyLevel).toBe(10000);
         });
-    
+
         it("should not exceed 10000 energy units", function() {
             // given
-    
+
             // when
             shield.changeEnergy(2001);
 
@@ -57,7 +57,7 @@ describe("shields", function () {
 
         it("should not drop below 0 energy units", function() {
             // given
-    
+
             // when
             shield.changeEnergy(-8001);
 
@@ -67,22 +67,33 @@ describe("shields", function () {
 
         it("should have a minimum of 0 energy units", function() {
             // given
-    
+
             // when
             shield.changeEnergy(-8000);
-    
+
             // then
             expect(shield.energyLevel).toBe(0);
         });
 
         it("should not a drop below 0 energy units", function() {
             // given
-    
+
             // when
             shield.changeEnergy(-8001);
-    
+
             // then
             expect(shield.energyLevel).toBe(0);
         });
     });
+    describe("shieldsbuckle", function() {
+        it("should buckle when energy level drops below 0 energy units", function() {
+            // given
+
+            // when
+            shield.changeEnergy(-10000);
+
+            // then
+            expect(shield.shieldsbuckle).toBe(true);
+        });
+      });
 });
