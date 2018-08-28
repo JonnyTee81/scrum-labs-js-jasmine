@@ -102,6 +102,13 @@ Game.prototype = {
             }
             if (amount === "transfer") {
                 this.shield.changeEnergy(target);
+                this.energy -= target;
+                if (this.energy < 0) {
+                    this.energy = 0;
+                }
+                if (this.energy > 10000) {
+                    this.energy = 10000;
+                }
             }
         }
         this.fireWeapon(ui, command, target, amount);
