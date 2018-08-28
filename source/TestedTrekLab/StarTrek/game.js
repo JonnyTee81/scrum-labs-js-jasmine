@@ -2,6 +2,8 @@ Game = function() {
     this.energy = 10000;
     this.torpedoes = 8;
     this.maxPhaserRange = 4000;
+    this.subSystems = ['weapons', 'engines', 'shields'];
+    this.selectedSubSystem = null;
 
     this.shield = new Shield();
 };
@@ -91,6 +93,9 @@ Game.prototype = {
         if (direction === "up") {
             this.shield.raise();
         }
+    },
+    dispurseEnergytoSubsystem: function(){
+
     },
     processCommand: function(ui) {
         var target = ui.variable("target");
