@@ -1,4 +1,4 @@
-describe("shields", function() {
+describe("shield command", function() {
     var game;
     var ui;
     var energyBefore;
