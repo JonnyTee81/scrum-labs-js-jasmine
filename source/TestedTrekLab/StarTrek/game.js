@@ -89,33 +89,35 @@ Game.prototype = {
             ui.writeLine("No more photon torpedoes!");
         }       
     },
-    transferEnergy: function (amount) {
-        this.shield.changeEnergy(amount);
-        this.energy -= amount;
+    toggleShield: function (direction) {
+        if (direction === "up") {
+            this.shield.raise();
+        }
     },
     dispurseEnergytoSubsystem: function(){
+
+    },
+    getRandomItemFromArray: function () {
 
     },
     processCommand: function(ui) {
         var target = ui.variable("target");
         var command = ui.parameter("command");
         var amount = ui.parameter("amount");
-        if (command.match("shields up")) {
-            this.shield.raise();
-        } else if (command === "shield transfer") {
-            var currentShieldEnergy = this.shield.getEnergy();
-            var deltaEnergy = amount;
-
-            if (currentShieldEnergy + amount > 10000) {
-                deltaEnergy = (10000 - currentShieldEnergy);
+        if (command.match("shield")) {
+            if (amount === "up") {
+                this.toggleShield(amount);
             }
-
-            if (this.energy - deltaEnergy > 0) {
-                this.transferEnergy(deltaEnergy);
-            } else {
-                // TODO - tell captain to pick different amount?
+            if (amount === "transfer") {
+                this.shield.changeEnergy(target);
+                this.energy -= target;
+                if (this.energy < 0) {
+                    this.energy = 0;
+                }
+                if (this.energy > 10000) {
+                    this.energy = 10000;
+                }
             }
-            
         }
         this.fireWeapon(ui, command, target, amount);
     }
