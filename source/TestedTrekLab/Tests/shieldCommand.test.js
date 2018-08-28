@@ -47,4 +47,18 @@ describe("shield command", function() {
         expect(game.energy).toBe(1000);
         expect(game.shield.energyLevel).toBe(8000);
     });
+
+    it("should transfer energy from ship to shield if transfer amount does not exceed ship current energy", function() {
+        // given
+        game.energy = 1000;
+        ui.commandName = "shield transfer";
+        ui.commandParameter = 999;
+
+        // when
+        game.processCommand(ui);
+
+        // then
+        expect(game.energy).toBe(1);
+        expect(game.shield.energyLevel).toBe(8999);
+    });
 });
