@@ -9,6 +9,7 @@ Shield.prototype = {
     changeEnergy: function (val) {
         this.energyLevel += val;
         if (this.energyLevel > 10000) {
+            var excessEnergy = this.energyLevel - 10000;
             this.energyLevel = 10000;
             // TODO - where did the extra energy go!?
         }
@@ -18,6 +19,9 @@ Shield.prototype = {
             this.energyLevel = 0;
             this.shieldsbuckle = true;
         }
+    },
+    getEnergy: function () {
+        return this.energyLevel;
     },
     raise: function () {
         this.isUp = true;
