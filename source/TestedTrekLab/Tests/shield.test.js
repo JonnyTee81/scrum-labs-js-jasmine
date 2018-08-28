@@ -1,8 +1,10 @@
 describe("shields", function () {
     var shield;
+    var game;
 
     beforeEach(function () {
         shield = new Shield();
+        game = new Game();
     });
 
     it("should be down by default", function() {
@@ -86,7 +88,7 @@ describe("shields", function () {
         });
     });
     describe("shieldsbuckle", function() {
-        it("should buckle when energy level drops below 0 energy units", function() {
+        it("should buckle when shield energy level drops below 0 energy units", function() {
             // given
 
             // when
@@ -94,6 +96,17 @@ describe("shields", function () {
 
             // then
             expect(shield.shieldsbuckle).toBe(true);
+        });
+        it("should remaining hit energy to disperse", function () {
+            // given
+            shield.energyLevel = 2000;
+            
+            // when
+            shield.changeEnergy(-3000);
+
+            // then
+            expect(shield.energyLevel).toBe(0);
+            expect(shield.unresolvedEnergy).toBe(-1000);
         });
       });
 });
