@@ -61,4 +61,31 @@ describe("shield command", function() {
         expect(game.energy).toBe(1);
         expect(game.shield.energyLevel).toBe(8999);
     });
+
+    it("should not raise shields if shield subsystem is damaged", function () {
+        // given - shields are damaged
+        game.subSystems[1].damaged = true;
+        ui.commandName = "shields up";
+
+        // when - captain says shields up
+        game.processCommand(ui);
+
+        // then - shields do not go up
+        expect(game.shield.isUp).toBe(false);
+
+    });
+
+    it("should not transfer any energy if shield subsystem is damaged", function () {
+        // given - shields are damaged
+        game.subSystems[1].damaged = true;
+        ui.commandName = "shields transfer";
+        ui.commandParameter = 1;
+
+        // when - captain says shields transfer
+        game.processCommand(ui);
+
+        // then - shields do not transfer energy
+        expect(game.energy).toBe(10000);
+        expect(game.shield.energyLevel).toBe(8000);
+    });
 });

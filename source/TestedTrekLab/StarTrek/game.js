@@ -6,15 +6,15 @@ Game = function() {
     this.subSystems = [{
             system: 'weapons',
             unitToStardate: 300,
-            units: 0
+            damaged: false
         },{
             system: 'shields',
             unitToStardate: 500,
-            units: 0
+            damaged: false
         }, {
             system: 'engines',
             unitToStardate: 200,
-            units: 0
+            damaged: false
         }];
     this.selectedSubSystem = null;
 
@@ -117,10 +117,11 @@ Game.prototype = {
         var target = ui.variable("target");
         var command = ui.parameter("command");
         var amount = ui.parameter("amount");
-        if (command === "shields up") {
+
+        if (command === "shields up" && !this.subSystems[1].damaged) {
             this.shield.raise();
         }
-        if (command === "shield transfer") {
+        if (command === "shield transfer" && !this.subSystems[1].damaged) {
             var currentShieldEnergy = this.shield.getEnergy();
             var deltaEnergy = amount;
 
@@ -134,7 +135,7 @@ Game.prototype = {
                 // TODO - tell captain to pick different amount?
             }
         }
-        if (command === "photon" || command === "phaser") {
+        if ((command === "photon" || command === "phaser") && !this.subSystems[0].damaged) {
             this.fireWeapon(ui, command, target, amount);
         }
     }

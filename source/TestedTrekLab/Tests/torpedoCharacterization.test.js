@@ -96,5 +96,15 @@ describe("photons", function() {
             expect(game.torpedoes).toBe(7);
         });
     });
+
+    describe("when weapons subsystem is damaged", function () {
+        it("should not fire", function () {
+            game.subSystems[0].damaged = true;
+
+            game.processCommand(ui);
+
+            expect(game.torpedoes).toBe(8);
+        });
+    });
 });
 
