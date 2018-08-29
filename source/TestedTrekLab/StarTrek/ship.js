@@ -13,6 +13,8 @@ Ship = function() {
         damaged: false
     }];
     this.selectedSubSystem = null;
+    this.enemyFireEnergyUnits = 0;
+    this.shield = new Shield();
 }
 
 Ship.prototype = {
@@ -36,6 +38,11 @@ Ship.prototype = {
             if (this.selectedSubSystem.unitToStardate >= val) {
                 this.selectedSubSystem.damaged = true;
             }
+        }
+    },
+    receiveFire: function(val){
+        if(this.shield.energyLevel<=val){
+            this.shield.isUp = false;
         }
     },
     getRandomItemFromArray: function (itemArray) {
