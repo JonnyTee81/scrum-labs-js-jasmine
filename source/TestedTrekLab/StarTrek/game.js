@@ -2,22 +2,7 @@ Game = function() {
     this.energy = 10000;
     this.torpedoes = 8;
     this.maxPhaserRange = 4000;
-    // this.subSystems = ['weapons', 'engines', 'shields'];
-    this.subSystems = [{
-            system: 'weapons',
-            unitToStardate: -300,
-            damaged: false
-        },{
-            system: 'shields',
-            unitToStardate: -500,
-            damaged: false
-        }, {
-            system: 'engines',
-            unitToStardate: -200,
-            damaged: false
-        }];
-    this.selectedSubSystem = null;
-
+    
     this.shield = new Shield();
 };
 
@@ -106,21 +91,6 @@ Game.prototype = {
         if (direction === "up") {
             this.shield.raise();
         }
-    },
-    selectRandomSubsystem: function(val){
-        
-        this.selectedSubSystem = this.getRandomItemFromArray(this.subSystems);
-        console.log(this.selectedSubSystem);
-    },
-    damageSubsystem: function (val){
-        if(!this.selectedSubSystem.damaged){
-            if(this.selectedSubSystem.unitToStardate >= val){
-                this.selectedSubSystem.damaged = true;
-            }
-        }
-    },
-    getRandomItemFromArray: function (itemArray) {
-        return itemArray[Math.floor(Math.random() * itemArray.length)]
     },
     processCommand: function(ui) {
         var target = ui.variable("target");

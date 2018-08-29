@@ -1,15 +1,20 @@
 describe("ship", function () {
     var game;
+    var ship;
     var shield;
+    var ui;
 
     beforeEach(function () {
         game = new Game();
+        ship = new Ship();
         shield = new Shield();
+        ui = new UserInterface();
     });
 
-    it("ship should STOPPED if no more subsystems exist", function () {
+    it("Subsystems are no longer functioning on ship", function () {
         // given
-        game.subSystems = [{
+        selectedSubSystem = null;
+        ship.subSystems = [{
             system: 'weapons',
             unitToStardate: -300,
             damaged: true
@@ -24,27 +29,50 @@ describe("ship", function () {
         }];
 
         // when
-        game.selectRandomSubsystem(game.subSystems);
+        ship.selectRandomSubsystem(ship.subSystems, ui);
 
         // then
-        expect(game.selectedSubSystem).toBeNull();
-
+        // expect(ui.writeLine).toHaveBeenCalledWith("All subsystems are damaged");
+        expect(ship.selectedSubSystem).toBeNull();
     });
 
-    it("should apply damage to subsystem", function () {
+    it("should apply damage to weapons subsystem", function () {
         // given
-        game.selectedSubSystem = {
+        ship.selectedSubSystem = {
             system: 'weapons',
             unitToStardate: -300,
             damaged: false
         };
 
         // when
-        // game.dispurseEnergytoSubsystem(-400);
-        game.damageSubsystem(-400);
+        ship.damageSubsystem(-300);
 
         // then
-        expect(game.selectedSubSystem.damaged).toBe(true);
+        expect(ship.selectedSubSystem.damaged).toBe(true);
+    });
+
+    it("should select a random undamaged subsystem from ship", function () {
+        // given
+        ship.subSystems = [{
+            system: 'weapons',
+            unitToStardate: -300,
+            damaged: true
+        }, {
+            system: 'shields',
+            unitToStardate: -500,
+            damaged: false
+        }, {
+            system: 'engines',
+            unitToStardate: -200,
+            damaged: true
+        }];
+
+        // when
+        ship.selectRandomSubsystem(ship.subSystems, ui);
+
+        // then
+        // console.log(ship.selectedSubSystem.system);
+        expect(ship.selectedSubSystem.system).toBe('shields');
     });
 
 });
